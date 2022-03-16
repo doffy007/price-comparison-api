@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	db             *gorm.DB = config.SetUpDatabaseConnection()
+	db             *gorm.DB                  = config.SetUpDatabaseConnection()
 	authController controller.AuthController = controller.NewAuthController()
 )
 
@@ -23,6 +23,12 @@ func main() {
 	}
 
 	authRoutes = r.Group("api/admin")
+	{
+		authRoutes.POST("/login", authController.Login)
+		authRoutes.POST("/register", authController.Register)
+	}
+
+	authRoutes = r.Group("api/users")
 	{
 		authRoutes.POST("/login", authController.Login)
 		authRoutes.POST("/register", authController.Register)
